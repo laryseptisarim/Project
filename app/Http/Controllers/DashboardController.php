@@ -24,19 +24,21 @@ class DashboardController extends Controller
     public function daftarSiswa($jurusan, $kelas)
     {
         $data = Siswa::where('kelas', $kelas)->where('id_jurusan', $jurusan)->get();
-        return view('siswa.daftar-siswa', ['daftarSiswa' => $data]);
+        return view('siswa.daftar-siswa', ['daftarSiswa' => $data, 'jurusan' => $jurusan, 'kelas' => $kelas]);
     }
 
     public function addSiswa($jurusan, $kelas)
     {
         $data = Jurusan::all();
-        return view('siswa.add-siswa', ['daftarJurusan' => $data]);
+        return view('siswa.add-siswa', ['daftarJurusan' => $data, 'jurusan' => $jurusan, 'kelas' => $kelas]);
     }
 
-    public function createSiswa($jurusan, $kelas)
+    public function createSiswa(Request $request, $jurusan, $kelas)
     {
-        $data = Jurusan::all();
-        return redirect('siswa.daftar-siswa', ['data' => $data])->with('sukses','Data berhasil ditambahkan!');
+        $data = $request->except('jurusan');
+        $data['id_jurusan'] = $request->jurusan;
+        Siswa::create($data);
+        return redirect()->route('daftarSiswa', [$jurusan, $kelas])->with('sukses','Data berhasil ditambahkan!');
     }
     
 }

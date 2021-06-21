@@ -7,7 +7,7 @@
 <div class="container-fluid">
 <h3 class="page-title">Tambah Siswa</h3>
 <div class="col-md-12">
-<form action="{{route('createSiswa')}}" method="POST">
+<form action="{{route('createSiswa', [$jurusan, $kelas])}}" method="POST">
 {{csrf_field()}}
   <div class="row mb-3">
    <label for="inputEmail3" class="col-sm-2 col-form-label">Nama Siswa</label>
